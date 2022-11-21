@@ -12,8 +12,8 @@ BigInteger one = new BigInteger("1");
 
 void setup() {
   keys = loadStrings("keys.txt");
-  p = new BigInteger("331");
-  q = new BigInteger("149");
+  p = new BigInteger(keys[1]);
+  q = new BigInteger(keys[2]);
   size(500, 500);
   background(0);
   frameRate(10);
@@ -27,7 +27,7 @@ void setup() {
   println("N = " + keys[3]);
   println("Euler = " + keys[4]);
   println("E = " + keys[5]);
-  //println("D = " + keys[6]);
+  println("D = " + keys[6]);
   textAlign(CENTER);
   textSize(50);
   s = new Server(this, 12345);
@@ -44,9 +44,8 @@ void draw() {
   if (c != null) {
     toDisplay = stringInput();
   }
-  
+
   text(toDisplay, width/2, height/2);
-  
 }
 
 String stringInput() {
@@ -79,7 +78,21 @@ void createPrivate() {
       keys[5] = e.toString();
     }
   }
-  
+  BigInteger l1[] = {euler, one, BigInteger.ZERO};
+  BigInteger l2[] = {e, BigInteger.ZERO, one};
+  while (((l1[0].subtract(l2[0])).multiply((l1[0].divide(l2[0])))).compareTo(BigInteger.ZERO) > 0) {
+    BigInteger l3[] = l2;
+    BigInteger q = l1[0].divide(l2[0]);
+    l2[0] = (l1[0].subtract(l2[0])).multiply(q);
+    l2[1] = (l1[1].subtract(l2[1])).multiply(q);
+    l2[2] = (l1[2].subtract(l2[2])).multiply(q);
+    l1 = l3;
+  }
+  if (l1[2].compareTo(BigInteger.ZERO) < 0) {
+    l1[2] = l1[2].add(euler);
+  }
+  keys = expand(keys, keys.length+1);
+  keys[6] = l1[2].toString();
 }
 
 BigInteger gcd(BigInteger a, BigInteger b) {
