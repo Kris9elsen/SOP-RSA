@@ -21,6 +21,7 @@ void setup() {
     createPublic();
     createPrivate();
     keys[0] = "1";
+    saveStrings("keys.txt", keys);
   }
   println("P = " + keys[1]);
   println("Q = " + keys[2]);
@@ -31,6 +32,7 @@ void setup() {
   textAlign(CENTER);
   textSize(50);
   s = new Server(this, 12345);
+  println("Ready for Client");
 }
 
 void serverEvent(Server someServer, Client someClient) {
