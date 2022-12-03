@@ -15,16 +15,15 @@ void setup() {
   size(500, 500);
   background(30);
   startFunktion();
-  c = new Client(this, "192.168.87.178", 12345);
+  c = new Client(this, "192.168.87.124", 12345);
 }
 
-void loop() {
-  
+void draw() {
   if (!gotKeys) {
     if (c.available() > 0) {
       input = c.readString();
       String[] in = input.split(",");
-      if (in[0] == "Connected") {
+      if (in[0].equals("Connected")) {
         keys[0] = new BigInteger(in[1]);
         keys[1] = new BigInteger(in[2]);
         println("N = " + keys[0] + " E = " + keys[1]);
@@ -49,5 +48,9 @@ void startFunktion() {
 }
 
 public void Send(String in) {
- println(in); 
+  krypterSend(in);
+}
+
+void krypterSend(String text) {
+  
 }
