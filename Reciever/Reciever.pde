@@ -38,7 +38,8 @@ void setup() {
 void serverEvent(Server someServer, Client someClient) {
   println("Client connected: " + someClient.ip()); 
   client = someClient;
-  client.write("Connected," + keys[3] + "," + keys[5]);
+  String toSend = "Connected," + keys[3] + "," + keys[5];
+  client.write(toSend);
 }
 
 void draw() {
