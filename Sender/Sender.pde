@@ -52,5 +52,7 @@ public void Send(String in) {
 }
 
 void krypterSend(String text) {
+  String toSend = text;
   
+  c.write(toSend);
 }
