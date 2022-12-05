@@ -16,7 +16,7 @@ void setup() {
   size(500, 500);
   background(30);
   startFunktion();
-  c = new Client(this, "192.168.87.124", 12345);
+  c = new Client(this, "192.168.87.178", 12345);
 }
 
 void draw() {
