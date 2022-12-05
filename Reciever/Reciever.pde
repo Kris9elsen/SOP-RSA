@@ -5,10 +5,10 @@ Server s;
 Client c;
 Client client;
 String input;
-String toDisplay = "GAY NIGGA";
 String[] keys;
 BigInteger p, q, N, euler, e, d;
 BigInteger one = new BigInteger("1");
+BigInteger tiK = new BigInteger("10000");
 
 void setup() {
   keys = loadStrings("keys.txt");
@@ -51,6 +51,7 @@ void draw() {
   c = s.available();
   if (c != null) {
     input = client.readString();
+    println(input);
     decryptInput(input);
   }
 }
@@ -61,8 +62,11 @@ void decryptInput(String in) {
     BigInteger block = new BigInteger(blocks[i]);
     BigInteger tempBlock = block;
     BigInteger k;
-    for (k = new BigInteger("0"); k.compareTo(d) < 0; k = k.add(one)) {
+    for (k = new BigInteger("0"); k.compareTo(d.subtract(one)) < 0; k = k.add(one)) {
       block = block.multiply(tempBlock);
+      if (k.mod(tiK) == BigInteger.ZERO) {
+       println(k); 
+      }
     }
     block = block.mod(N);
     String temp = block.toString();
@@ -75,6 +79,18 @@ void decryptInput(String in) {
     } else {
       blocks[i] = block.toString();
     }
+  }
+  char[] chars = new char[blocks.length*2];
+  int j = 0;
+  for (int i = 0; i < blocks.length; i++) {
+   chars[j] = char(int(blocks[i].substring(0, 3)));
+   j++;
+   chars[j] = char(int(blocks[i].substring(3)));
+   j++;
+  }
+  String toDisplay = "";
+  for  (int i = 0; i < chars.length; i++) {
+   toDisplay = toDisplay + chars[i]; 
   }
   background(0);
   text(toDisplay, width/2, height/2);
