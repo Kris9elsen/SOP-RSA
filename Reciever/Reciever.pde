@@ -7,7 +7,7 @@ Client client;
 String input;
 String toDisplay = "GAY NIGGA";
 String[] keys;
-BigInteger p, q, N, euler, e;
+BigInteger p, q, N, euler, e, d;
 BigInteger one = new BigInteger("1");
 
 void setup() {
@@ -22,13 +22,18 @@ void setup() {
     createPrivate();
     keys[0] = "1";
     saveStrings("keys.txt", keys);
+  } else {
+    N = new BigInteger(keys[3]);
+    euler = new BigInteger(keys[4]);
+    e = new BigInteger(keys[5]);
+    d = new BigInteger(keys[6]);
+    println("P = " + keys[1]);
+    println("Q = " + keys[2]);
+    println("N = " + keys[3]);
+    println("Euler = " + keys[4]);
+    println("E = " + keys[5]);
+    println("D = " + keys[6]);
   }
-  println("P = " + keys[1]);
-  println("Q = " + keys[2]);
-  println("N = " + keys[3]);
-  println("Euler = " + keys[4]);
-  println("E = " + keys[5]);
-  println("D = " + keys[6]);
   textAlign(CENTER);
   textSize(50);
   s = new Server(this, 12345);
@@ -45,16 +50,26 @@ void serverEvent(Server someServer, Client someClient) {
 void draw() {
   c = s.available();
   if (c != null) {
-    toDisplay = stringInput();
+    input = client.readString();
+    decryptInput(input);
   }
-
-  text(toDisplay, width/2, height/2);
 }
 
-String stringInput() {
-  input = client.readString();
-  println(input);
-  return input;
+void decryptInput(String in) {
+  String[] blocks = in.split(",");
+  for (int i = 0; i < blocks.length; i++) {
+    BigInteger block = new BigInteger(blocks[i]);
+    BigInteger temp = block;
+    BigInteger k;
+    for (k = new BigInteger("0"); k.compareTo(d) < 0; k = k.add(one)) {
+      block = block.multiply(temp);
+    }
+    block = block.mod(N);
+    if ()
+    blocks[i] = block.toString();
+  }
+  background(0);
+  text(toDisplay, width/2, height/2);
 }
 
 void createPublic() {
@@ -95,6 +110,7 @@ void createPrivate() {
     l1[2] = l1[2].add(euler);
   }
   keys = expand(keys, keys.length+1);
+  d = l1[2];
   keys[6] = l1[2].toString();
 }
 
