@@ -59,14 +59,22 @@ void decryptInput(String in) {
   String[] blocks = in.split(",");
   for (int i = 0; i < blocks.length; i++) {
     BigInteger block = new BigInteger(blocks[i]);
-    BigInteger temp = block;
+    BigInteger tempBlock = block;
     BigInteger k;
     for (k = new BigInteger("0"); k.compareTo(d) < 0; k = k.add(one)) {
-      block = block.multiply(temp);
+      block = block.multiply(tempBlock);
     }
     block = block.mod(N);
-    if ()
-    blocks[i] = block.toString();
+    String temp = block.toString();
+    if (temp.length() < 6) {
+      if (temp.length() < 5) {
+        blocks[i] = "00" + block.toString();
+      } else {
+        blocks[i] = "0" + block.toString();
+      }
+    } else {
+      blocks[i] = block.toString();
+    }
   }
   background(0);
   text(toDisplay, width/2, height/2);
