@@ -3,6 +3,17 @@ import processing.net.*;
 
 Client c;
 String input;
+<<<<<<< HEAD
+BigInteger[][] solutions = new BigInteger[0][2];
+
+
+void setup() {
+  
+}
+
+void draw() {
+  
+=======
 String[] publicKey;
 Boolean gotKey;
 BigInteger N, sqrtN;
@@ -59,4 +70,5 @@ BigInteger sqrt(BigInteger x) {
     div2 = div;
     div = y;
   }
+>>>>>>> 8c888b46fe1561d3220c657b995b432e1e9b9dc7
 }
