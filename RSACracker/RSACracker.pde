@@ -3,6 +3,7 @@ import processing.net.*;
 
 Client c;
 String input;
+String[] publicKey;
 Boolean gotKey;
 BigInteger N, sqrtN;
 BigInteger[][] solutions = new BigInteger[0][2];
@@ -15,11 +16,19 @@ void draw() {
   if (!gotKey) {
     if (c.available() > 0) {
       input = c.readString();
-      String[] publicKey = input.split(",");
+      publicKey = input.split(",");
       if (publicKey[0].equals("Connected")) {
-        solutionFinder(publicKey[1]);
+        gotKey = true;
       }
     }
+  }
+  if (gotKey) {
+    solutionFinder(publicKey[1]);
+    String[] toSave = new String[solutions.length];
+    for (int i = 0; i < solutions.length; i++) {
+      toSave[i] = solutions[i][0] + "," + solutions[i][1];
+    }
+    saveStrings("solutions.txt", toSave);
   }
 }
 
