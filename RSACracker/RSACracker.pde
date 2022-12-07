@@ -3,24 +3,18 @@ import processing.net.*;
 
 Client c;
 String input;
-<<<<<<< HEAD
-BigInteger[][] solutions = new BigInteger[0][2];
-
-
-void setup() {
-  
-}
-
-void draw() {
-  
-=======
 String[] publicKey;
-Boolean gotKey;
+String[] solutions = new String[0];
+Boolean gotKey = false;
+Boolean foundSolutions = false;
 BigInteger N, sqrtN;
-BigInteger[][] solutions = new BigInteger[0][2];
+BigInteger one = new BigInteger("1");
+
+
+
 
 void setup() {
-  c = new Client(this, "", 12345);
+  c = new Client(this, "192.168.87.124", 12345);
 }
 
 void draw() {
@@ -29,38 +23,38 @@ void draw() {
       input = c.readString();
       publicKey = input.split(",");
       if (publicKey[0].equals("Connected")) {
+        println(input);
         gotKey = true;
       }
     }
   }
-  if (gotKey) {
+  if (gotKey && !foundSolutions) {
     solutionFinder(publicKey[1]);
-    String[] toSave = new String[solutions.length];
-    for (int i = 0; i < solutions.length; i++) {
-      toSave[i] = solutions[i][0] + "," + solutions[i][1];
-    }
-    saveStrings("solutions.txt", toSave);
+    saveStrings("solutions.txt", solutions);
+    foundSolutions = true;
   }
 }
 
 void solutionFinder(String publicKey) {
   N = new BigInteger(publicKey);
   sqrtN = sqrt(N);
-  if (sqrtN.getLowestSetBit() == 0) sqrtN = sqrtN.subtract(BigInteger.ONE);
+  if (sqrtN.mod(BigInteger.valueOf(2)) == BigInteger.ZERO) sqrtN.subtract(one);
   BigInteger i;
-  for (i = sqrtN; i.compareTo(BigInteger.ZERO) > 1; i = i.subtract(BigInteger.valueOf(2))) {
-    if (sqrtN.mod(i) == BigInteger.ZERO) {
-      solutions = new BigInteger[solutions.length+1][2];
-      solutions[solutions.length-1][0] = i;
+  for (i = sqrtN; i.compareTo(BigInteger.ZERO) > 0; i = i.subtract(BigInteger.valueOf(2))) {
+    if (N.mod(i) == BigInteger.ZERO) {
+      println(N + " MOD " + i + " = 0");
+      solutions = expand(solutions, solutions.length+1);
+      solutions[solutions.length-1] = i.toString();
     }
   }
   for (int k = 0; k < solutions.length; k++) {
-    BigInteger q = N.divide(solutions[k][0]);
-    solutions[k][1] = q;
+    BigInteger p = new BigInteger(solutions[k]);
+    BigInteger q = N.divide(p);
+    solutions[k] = solutions[k] + "," + q.toString();
   }
 }
 
-BigInteger sqrt(BigInteger x) {
+BigInteger sqrt(BigInteger x) { 
   BigInteger div = BigInteger.ZERO.setBit(x.bitLength()/2);
   BigInteger div2 = div;
   for (;; ) {
@@ -70,5 +64,4 @@ BigInteger sqrt(BigInteger x) {
     div2 = div;
     div = y;
   }
->>>>>>> 8c888b46fe1561d3220c657b995b432e1e9b9dc7
 }
