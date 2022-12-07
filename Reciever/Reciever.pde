@@ -27,13 +27,13 @@ void setup() {
     euler = new BigInteger(keys[4]);
     e = new BigInteger(keys[5]);
     d = new BigInteger(keys[6]);
-    println("P = " + keys[1]);
-    println("Q = " + keys[2]);
-    println("N = " + keys[3]);
-    println("Euler = " + keys[4]);
-    println("E = " + keys[5]);
-    println("D = " + keys[6]);
   }
+  println("P = " + keys[1]);
+  println("Q = " + keys[2]);
+  println("N = " + keys[3]);
+  println("Euler = " + keys[4]);
+  println("E = " + keys[5]);
+  println("D = " + keys[6]);
   textAlign(CENTER);
   textSize(50);
   s = new Server(this, 12345);
@@ -65,7 +65,7 @@ void decryptInput(String in) {
     for (k = new BigInteger("0"); k.compareTo(d.subtract(one)) < 0; k = k.add(one)) {
       block = block.multiply(tempBlock);
       if (k.mod(tiK) == BigInteger.ZERO) {
-       println(k); 
+        println(k);
       }
     }
     block = block.mod(N);
@@ -83,14 +83,14 @@ void decryptInput(String in) {
   char[] chars = new char[blocks.length*2];
   int j = 0;
   for (int i = 0; i < blocks.length; i++) {
-   chars[j] = char(int(blocks[i].substring(0, 3)));
-   j++;
-   chars[j] = char(int(blocks[i].substring(3)));
-   j++;
+    chars[j] = char(int(blocks[i].substring(0, 3)));
+    j++;
+    chars[j] = char(int(blocks[i].substring(3)));
+    j++;
   }
   String toDisplay = "";
   for  (int i = 0; i < chars.length; i++) {
-   toDisplay = toDisplay + chars[i]; 
+    toDisplay = toDisplay + chars[i];
   }
   background(0);
   text(toDisplay, width/2, height/2);
