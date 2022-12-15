@@ -1,0 +1,49 @@
+
+Importere nødvendige biblioteker.
+
+Definere variabler der skal bruges til client siden.
+Definere variabler der skal bruges til at bryde krypteringen.
+
+setup funktion {
+    Start clienten, og forbind til serveren.
+} setup funktion slut.
+
+loop funktion {
+    Hvis programet ikke ahr modtaget nøglen {
+        Lyt efter input fra serveren.
+        Hvis modtager nøglen. 
+        Gem nøglen.
+    }
+
+    Hvis den har modtaget nøglen {
+        Kald løsnings finder funktion.
+        Når funktion er færdig gem løsninger i txt dokument.
+    }
+} loop funktion slut.
+
+Løsnings finder funktion {
+    Kalder kvadratrodsfunktion for N.
+
+    Looper alle uligetaæl under kvadratroden af n igennem {
+        Hvis tallet går op i N {
+            Gem det som en mulig løsning.
+        }
+    } Loop slut.
+
+    Looper alle løsninger fra tidligere igennem {
+        Divider løsning med N, for at få det sidste tal.
+        Gemmer det andet tal til løsningen.
+    } loop slut
+} løsnings funktion slut.
+
+Kvadratrods funktion (modtager x){
+    Sætter variable div til at være 0 med en bit værdi ved halvdelen af x.bitlængde.
+    Loop der køre indtil der sendes et svar tilbage {
+        Sætter y til at være div + x divideret med div og bitsne shiftet mod højre.
+        Hvis y er ligemed div eller div2 {
+            Send y tilbage.
+        }
+        div2 = div
+        div = y
+    } loop slut.
+}

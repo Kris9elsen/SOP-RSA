@@ -1,0 +1,104 @@
+
+Importer biblioteker der skal bruges.
+
+Definer variabler der skal bruges til serveren.
+Definer variabler der skal bruges til kryptering.
+
+setup funktion {
+    Indlæs txt fil med nøgler i.
+    Definer varaibler med de to primtal.
+    Kør funktioner der tegner vinduet.
+
+    Hvis det er ikke er nøgler i txt filen {
+        Køre funktion der laver den offentlige nøgle.
+        Kør funktion der laver den private nøgle.
+        Gem den offentlige og private nøgle.
+    }
+
+    Hvis der ligger nøgler i txt filen {
+        Definer variabler med data fra txt filen.
+    }
+
+    Udskriv nøglerne til consol vinduet.
+
+    Vælger text størelse og position
+
+    Startrer serveren, så clienter kan tilslutte.
+
+    Udskriver til consol vinduet at den er klar til at modtage beskeder.
+} setup slut
+
+Server event funktion {
+    Udskriv til consol vinduet hvem der er tilsluttet
+    Gem clienten der er tilsluttet.
+    Send den offentlige nøgle til clienten.
+} event slut
+
+loop funktion {
+    Lyt efter input fra client.
+    Hvis input fra client {
+        Kør dekrypterings funktion.
+    }
+} loop slut
+
+Dekrypterings funktion {
+    Del inputet op i tal blokke.
+
+    Loop der går alle tal blokkene igennem {
+        Opløft talblokkene i dekrypterings eksponenten.
+        Tal blokken modulo N.
+        Lav talblokkene om til bogstaver.
+        Gem den dekrypterede blok.
+    }
+
+    Loop der går alle bogstavs blokkene igennem {
+        Laver dem om til enkelte chars.
+    }
+
+    Loop der går alle bogstaverne igennem {
+        Tilføjer dem til en string.
+    }
+    
+    Udskriv den dekrypterede tekst til skærmen.
+} dekrypt slut
+
+Lav offentlige nøgle {
+    Finder N ved at gange p og q
+    Gemmer N i nøgle array så det kan blive gemt i txt filen.
+} laver offentlig slut.
+
+Lav privat nøgle {
+    Starter med at beregne phi-funktion for N
+
+    Går igang med at finde e.
+    Loop indtil e fundet {
+        Tester om e er indbyrdes primisk med phi-funktion.
+        Kalder GCD funktion for at teste.
+        Er e indbyrde primisk {
+            Gemmer e i arrayet, så det kan blive gemt i txt filen.
+            Og loopet stopper.
+        }
+    } Loop slut.
+
+    Definere arrays til Euklids udvidet algoritme.
+    Loop sålænge rest ikke er 0 {
+        Udføre beregninger for Euklids udvidet algoritme.
+        Indtil rest er 0
+    } loop slut
+
+    Udregner d' så fremt d er negativt tal.
+    Gemmer d i arrayet så  det kan blive gemt i txt filen.
+} lav privat slut
+
+Største fælles devisor funktion (modtager a og b) {
+    loop indtil største fælles devisor er fundet {
+        Hvis a er støre end b {
+            Udregner a - b.
+        }
+        Ellers {
+            Udregner b - a.
+        }
+    } loop slut
+
+    Sender støste fælles devisor tilbage.
+} største fælles devisor slut.

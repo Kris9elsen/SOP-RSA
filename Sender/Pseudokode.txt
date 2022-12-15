@@ -1,0 +1,55 @@
+
+Importere nødvendige biblioteker.
+
+Definere variabler for clienten.
+Definere variabler for kryptering.
+Definere variabler for ControlP5 bibliotek.
+
+setup kode {
+    Starter controlP5 bibliotekt.
+    Definere hvordan skærmen skal se ud.
+    Køre startfunktion til at tegne controlP5 ting.
+    Starter clienten, og forbinder til serveren.
+} setup slut
+
+void loop {
+    Lytter efter information fra server intil den har modtaget nøglen til kryptering.
+    Hvis input fra server {
+        Læs om det er nøglen.
+        Hvis det er nøglen {
+            Gem nøglen i variabler.
+            Stop med at lytte efter nøglen.
+        }
+    }
+} void loop slut
+
+StartFunktion {
+    Vælger font og skrift størrelse for tekstfeld
+    Definere hvordan tekstfelded skal se ud.
+}
+
+SendFunktion {
+    giver input fra tekstfeld til krypterings funktion.
+} sendfunktion slut
+
+Krypterings funktion {
+    Laver array til alle tekstblokkene.
+
+    Loop input teksten igennem {
+        Laver tekstenb om til tal.
+    } loop slut
+
+    loop længden af tal reækken {
+        Lægger alle tallene i blokke af to.
+        Gemmer blokken i et array
+    } loop slut
+
+    Looper arrayet af blokke igennem {
+        Opløfter hver blok i krypterings eksponenten.
+        Blok modulo N.
+        Gemmer den kryptered blok.
+    } loop slut
+
+    Tilføjer alle krypterede blokkene til en string.
+    Sender String til serveren
+} Krypterings funktion slut
