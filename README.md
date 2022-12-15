@@ -1,2 +1,2 @@
 # SOP-RSA
-SOP i kryptering
+SOP i RSA-kryptering
